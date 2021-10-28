@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { useAppDispatch, useAppSelector } from './hooks'
 import { authSlice , isLoggedIn, selectLoggedInUser } from './store/authSlice'
+import { Button } from 'antd'
 
-
-function App() {
+const App:FC = ()=> {
   const loggedIn = useAppSelector(isLoggedIn)
   const loggedInUser = useAppSelector(selectLoggedInUser)
   const distpatch = useAppDispatch()
@@ -23,8 +23,8 @@ function App() {
 
   return (
     <div className="App">
-      <h3>{loggedInUser.name}</h3>
-      {!loggedIn? <button onClick={login}>Login</button>:<button onClick={logout}>Logout</button>}
+      <h1>{loggedInUser.name}</h1>
+      {!loggedIn? <Button shape="round" type="primary" onClick={login}>Login</Button>:<Button shape="round" type="dashed" onClick={logout}>Logout</Button>}
  
     </div>
   )
