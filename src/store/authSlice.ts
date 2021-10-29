@@ -1,5 +1,12 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AuthService } from '../api/AuthService'
 import type { RootState } from './index'
+import { Credential } from "../types/Auth";
+
+export const loginRequest = createAsyncThunk('auth/login', async (credential:Credential)=>{
+  const response = await AuthService.doLogin(credential)
+  return response.data
+})
 
 // Define a type for the slice state
 interface AuthState {
@@ -20,18 +27,25 @@ export const authSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<any>) => {
-      state.isLoggedIn = true 
-      state.user = action.payload
-    },
     logout: (state) => {
       state.isLoggedIn = false 
       state.user = {}
     },
   },
+  extraReducers(builder){
+    builder.addCase(loginRequest.fulfilled,(state,action)=>{
+      state.isLoggedIn = true 
+      state.user = action.payload
+    }),
+    builder.addCase(loginRequest.rejected,(state,action)=>{
+      state.isLoggedIn = false 
+      state.user = {}
+      console.log(action.payload)
+    })
+  }
 })
 
-export const { login, logout } = authSlice.actions
+export const { logout } = authSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLoggedInUser= (state: RootState) => state.auth.user

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from './hooks'
-import { authSlice , isLoggedIn, selectLoggedInUser } from './store/authSlice'
+import { authSlice , isLoggedIn, loginRequest, selectLoggedInUser } from './store/authSlice'
+import { Credential } from './types/Auth'
 
 
 function App() {
@@ -9,12 +10,12 @@ function App() {
   const distpatch = useAppDispatch()
  
   const login = ()=>{
-    let user = {
-      id: 1,
-      name: "Tareq Hossain",
-      email: "tareq@gamil.com"
+    let cred:Credential={
+      email:"tareq@gmail.com",
+      password:"123465"
     }
-    distpatch(authSlice.actions.login(user))
+
+    distpatch(loginRequest(cred))
   }
 
   const logout = ()=>{

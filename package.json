@@ -9,12 +9,14 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "antd": "^4.16.13",
+    "axios": "^0.24.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.3.2",
