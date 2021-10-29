@@ -16,5 +16,12 @@ export const AccountService = {
 
     getProfile:()=>{
         return axios.get(import.meta.env.VITE_API_URL+"/account/profile")
+    },
+
+    changePassword:(data:any)=>{
+        return axios.post(import.meta.env.VITE_API_URL+"/account/change-password",data)
     }
+
+
+    
 }
