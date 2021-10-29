@@ -1,35 +1,40 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from './hooks'
-import { selectLoggedInUser,isLoggedIn, getProfileRequest } from './store/accountSlice'
+import { selectLoggedInUser,isLoggedIn, getProfileRequest, accountSlice } from './store/accountSlice'
 import { authSlice , loginRequest} from './store/authSlice'
 import { Credential } from './types/Auth'
 
 
 function App() {
-  const loggedIn = useAppSelector(isLoggedIn)
+  let loggedIn = useAppSelector(isLoggedIn)
   const [user,setUser] = useState({})
   const loggedInUser = useAppSelector(selectLoggedInUser)
   const distpatch = useAppDispatch()
 
   useEffect(()=>{
-    
-    distpatch(getProfileRequest()).then((r)=>{
-      setUser(loggedInUser)
-    })
+   
+    distpatch(getProfileRequest())
     console.log(loggedIn)
-  },[distpatch])
+
+  },[distpatch,loggedIn])
  
-  const login = ()=>{
+  const login = async()=>{
     let cred:Credential={
       email:"tareq@gmail.com",
       password:"123456"
     }
+    try {
+     await distpatch(loginRequest(cred))
+      await distpatch(getProfileRequest())
+    } catch (error) {
+      console.log(error);
+      
+    }
 
-    distpatch(loginRequest(cred))
   }
 
   const logout = ()=>{
-    distpatch(authSlice.actions.logout())
+    distpatch(accountSlice.actions.logout())
   }
 
   return (

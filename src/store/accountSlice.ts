@@ -62,6 +62,6 @@ export const { logout } = accountSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLoggedInUser= (state: RootState) => state.account.user
-export const isLoggedIn = (state: RootState)=> state.auth.isLoggedIn
+export const isLoggedIn = (state: RootState)=> state.account.isLoggedIn
 
 export default accountSlice.reducer
