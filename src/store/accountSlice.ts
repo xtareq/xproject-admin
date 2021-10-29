@@ -3,12 +3,12 @@ import { AuthService } from '../api/AuthService'
 import type { RootState } from './index'
 import { Credential } from "../types/Auth";
 import { ls } from '../utils/Ls';
+import { AccountService } from '../api/AccountService';
 
 
-export const loginRequest = createAsyncThunk('auth/login', async (credential:Credential)=>{
+export const getProfileRequest = createAsyncThunk('account/profile', async ()=>{
     try {
-      const response = await AuthService.doLogin(credential)
-      ls.$set("accessToken",response.data.token)
+      const response = await AccountService.getProfile()
       return response.data
     } catch (error:any) {
       return Promise.reject(error&&error.response&&error.response.data)
@@ -16,21 +16,23 @@ export const loginRequest = createAsyncThunk('auth/login', async (credential:Cre
 })
 
 // Define a type for the slice state
-interface AuthState {
+interface AccountState {
   loading: boolean,
   isLoggedIn: boolean,
+  user: any,
   accessToken:string
 }
 
 // Define the initial state using that type
-const initialState: AuthState = {
+const initialState: AccountState = {
   loading:false,
   isLoggedIn: false,
-  accessToken:""
+  user:{},
+  accessToken:ls.$get("accessToken")||""
 }
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const accountSlice = createSlice({
+  name: 'account',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -38,24 +40,28 @@ export const authSlice = createSlice({
       ls.$remove("accessToken")
       state.accessToken = "",
       state.isLoggedIn = false 
+      state.user = {}
     },
   },
   extraReducers(builder){
-    builder.addCase(loginRequest.fulfilled,(state,action)=>{
+    builder.addCase(getProfileRequest.fulfilled,(state,action)=>{
       state.isLoggedIn = true 
+      state.user = action.payload
       console.log(action);
       
     }),
-    builder.addCase(loginRequest.rejected,(state,action)=>{
+    builder.addCase(getProfileRequest.rejected,(state,action)=>{
       state.isLoggedIn = false 
+      state.user = {}
       console.log(action)
     })
   }
 })
 
-export const { logout } = authSlice.actions
+export const { logout } = accountSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
+export const selectLoggedInUser= (state: RootState) => state.account.user
 export const isLoggedIn = (state: RootState)=> state.auth.isLoggedIn
 
-export default authSlice.reducer
+export default accountSlice.reducer
