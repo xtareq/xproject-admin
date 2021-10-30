@@ -46,7 +46,7 @@ export const accountSlice = createSlice({
   extraReducers(builder){
     builder.addCase(getProfileRequest.fulfilled,(state,action)=>{
       state.isLoggedIn = true 
-      state.user = action.payload
+      state.user = action.payload.user
       console.log(action);
       
     }),

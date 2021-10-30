@@ -1,7 +1,8 @@
+import { FC } from "react";
 
 
 
-const Login = () =>{
+const Login:FC = () =>{
     return (
         <div>Login</div>
     )
