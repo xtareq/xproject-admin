@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Link,Switch, Redirect } from 'react-router-dom'
+import { FC, useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route, Link,Switch, Redirect, useHistory, useLocation } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './hooks'
+import AppLayout from './layouts/AppLayout'
+import ForgetPassword from './pages/auth/ForgetPassword'
 import Login from './pages/auth/Login'
 import Dashboard from './pages/Dashboard'
 import { selectLoggedInUser,isLoggedIn, getProfileRequest, accountSlice } from './store/accountSlice'
@@ -16,11 +18,11 @@ export interface IRoute{
   meta?:any 
 }
 
-
+const publicRoutes:string[]=["/login","/forget-password","/reset-pasword"];
 const routes:IRoute[] = [
   {
     path:"/",
-    exact:false,
+    exact:true,
     children: Dashboard,
     auth:true,
     meta:{
@@ -34,8 +36,11 @@ function App() {
   const loggedInUser = useAppSelector(selectLoggedInUser)
   const distpatch = useAppDispatch()
 
+
   useEffect(()=>{
+    
    
+    
     distpatch(getProfileRequest())
     console.log(loggedIn)
 
@@ -67,18 +72,22 @@ function App() {
       {!loggedIn? <button onClick={login}>Login</button>:<button onClick={logout}>Logout</button>}
 
       <Router>
+      <Route path="/login" component={()=><Login/>}/>
+         <Route path="/forget-password" component={()=><ForgetPassword/>}/>
+         {!loggedIn ?!publicRoutes.includes(window.location.pathname)&&<Redirect to="/login"/>:
+         <AppLayout>
+            <Switch >
+              {  
+                
+                routes.map((r,i)=>{
+                  return <Route key={i} exact={r.exact} path={r.path} component={()=><r.children/>} /> 
+                })
+              }
+            
+            </Switch>
+         </AppLayout>
+        }
 
-        {!loggedIn && <Redirect to="/login"/>}
-        <Route path="/login" component={Login} />
-        <Switch >
-          {  
-            routes.map((r,i)=>{
-               
-               return loggedIn && <Route key={i} exact={r.exact} path={r.path} component={()=><r.children/>} /> 
-            })
-          }
-         
-        </Switch>
       </Router>
  
     </div>

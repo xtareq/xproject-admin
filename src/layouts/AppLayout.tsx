@@ -1,7 +1,9 @@
 
 const AppLayout = ({children}:any) =>{
     return (
-        <div>{children}</div>
+        <div>
+            header
+            {children}</div>
     )
 }
 
