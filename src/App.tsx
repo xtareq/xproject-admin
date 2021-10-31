@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from './hooks'
 import AppLayout from './layouts/AppLayout'
 import ForgetPassword from './pages/auth/ForgetPassword'
 import Login from './pages/auth/Login'
+import ResetPassword from './pages/auth/ResetPassword'
 import Dashboard from './pages/Dashboard'
 import { selectLoggedInUser,isLoggedIn, getProfileRequest, accountSlice } from './store/accountSlice'
 import { authSlice , loginRequest} from './store/authSlice'
@@ -18,7 +19,7 @@ export interface IRoute{
   meta?:any 
 }
 
-const publicRoutes:string[]=["/login","/forget-password","/reset-pasword"];
+const publicRoutes:string[]=["/login","/forget-password","/reset-password"];
 const routes:IRoute[] = [
   {
     path:"/",
@@ -72,8 +73,9 @@ function App() {
       {!loggedIn? <button onClick={login}>Login</button>:<button onClick={logout}>Logout</button>}
 
       <Router>
-      <Route path="/login" component={()=><Login/>}/>
+          <Route path="/login" component={()=><Login/>}/>
          <Route path="/forget-password" component={()=><ForgetPassword/>}/>
+         <Route path="/reset-password" component={()=><ResetPassword/>}/>
          {!loggedIn ?!publicRoutes.includes(window.location.pathname)&&<Redirect to="/login"/>:
          <AppLayout>
             <Switch >

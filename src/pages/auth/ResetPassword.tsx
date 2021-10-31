@@ -1,7 +1,8 @@
+import { FC } from "react";
 
 
 
-const ResetPassword = () =>{
+const ResetPassword:FC = () =>{
     return (
         <div>Reset Password</div>
     )
