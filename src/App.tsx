@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Link,Switch, Redirect, useHistory, useLocation } from 'react-router-dom'
+import { Router, Route, Link,Switch, Redirect, useHistory, useLocation } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './hooks'
 import AppLayout from './layouts/AppLayout'
 import ForgetPassword from './pages/auth/ForgetPassword'
