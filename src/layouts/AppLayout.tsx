@@ -1,5 +1,5 @@
 import AppHeader from "../components/layouts/app-header";
-
+import { withRouter } from 'react-router-dom'
 const AppLayout = ({children}:any) =>{
     return (
         <div>
@@ -8,4 +8,4 @@ const AppLayout = ({children}:any) =>{
     )
 }
 
-export default AppLayout;
+export default withRouter(AppLayout);
