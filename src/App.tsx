@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react'
-import { Router, Route, Link,Switch, Redirect, useHistory, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link,Switch, Redirect, useHistory, useLocation } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './hooks'
 import AppLayout from './layouts/AppLayout'
 import ForgetPassword from './pages/auth/ForgetPassword'
@@ -74,7 +74,7 @@ function App() {
       {/* <h3>{loggedInUser.name}</h3>
       {!loggedIn? <button onClick={login}>Login</button>:<button onClick={logout}>Logout</button>} */}
 
-      <Router history={history}>
+      <Router>
          <Route path="/login" component={()=><Login/>}/>
          <Route path="/forget-password" component={()=><ForgetPassword/>}/>
          <Route path="/reset-password" component={()=><ResetPassword/>}/>

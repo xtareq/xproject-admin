@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import { FC } from "react";
-import { useHistory } from "react-router";
+import { Redirect, useHistory, withRouter } from "react-router";
 import { useAppDispatch } from "../../../hooks";
 import { logout } from "../../../store/accountSlice";
 
@@ -10,8 +10,8 @@ const AppHeader:FC = () =>{
     const history = useHistory();
 
     const handleLogout = () =>{
-        dispatch(logout())
-        history.push("/login")
+         dispatch(logout())
+        return <Redirect to="/" />
     }
     return (
         <div>

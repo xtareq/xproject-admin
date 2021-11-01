@@ -8,4 +8,4 @@ const AppLayout = ({children}:any) =>{
     )
 }
 
-export default withRouter(AppLayout);
+export default AppLayout;

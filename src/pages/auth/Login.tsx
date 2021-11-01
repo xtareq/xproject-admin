@@ -35,7 +35,7 @@ const Login: FC = () => {
        }
      }else{
         toast.success("Logged In Successfully!")
-        return history.push("/")
+        window.location.href="/"
      }
   };
 
