@@ -1,15 +1,15 @@
-import { FC, useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Link,Switch, Redirect, useHistory, useLocation } from 'react-router-dom'
+import { FC, useEffect } from 'react'
+import { BrowserRouter as Router, Route,Switch, Redirect } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './hooks'
 import AppLayout from './layouts/AppLayout'
 import ForgetPassword from './pages/auth/ForgetPassword'
 import Login from './pages/auth/Login'
 import ResetPassword from './pages/auth/ResetPassword'
 import Dashboard from './pages/Dashboard'
-import { selectLoggedInUser,isLoggedIn, getProfileRequest, accountSlice } from './store/accountSlice'
-import { authSlice , loginRequest} from './store/authSlice'
+import { isLoggedIn, getProfileRequest, accountSlice } from './store/accountSlice'
+import { loginRequest} from './store/authSlice'
 import { Credential } from './types/Auth'
-import { createBrowserHistory } from "history";
+
 
 
 export interface IRoute{
@@ -21,7 +21,6 @@ export interface IRoute{
 }
 
 const publicRoutes:string[]=["/login","/forget-password","/reset-password"];
-const history = createBrowserHistory();
 const routes:IRoute[] = [
   {
     path:"/",
@@ -35,14 +34,10 @@ const routes:IRoute[] = [
 ]
 function App() {
   let loggedIn = useAppSelector(isLoggedIn)
-  const [user,setUser] = useState({})
-  const loggedInUser = useAppSelector(selectLoggedInUser)
   const distpatch = useAppDispatch()
 
 
   useEffect(()=>{
-    
-   
     
     distpatch(getProfileRequest())
     console.log(loggedIn)
@@ -71,9 +66,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <h3>{loggedInUser.name}</h3>
-      {!loggedIn? <button onClick={login}>Login</button>:<button onClick={logout}>Logout</button>} */}
-
       <Router>
          <Route path="/login" component={()=><Login/>}/>
          <Route path="/forget-password" component={()=><ForgetPassword/>}/>

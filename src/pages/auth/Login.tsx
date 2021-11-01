@@ -1,19 +1,18 @@
 import { FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getProfileRequest, isLoggedIn } from "../../store/accountSlice";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { isLoggedIn } from "../../store/accountSlice";
+import { Link, Redirect } from "react-router-dom";
 import { Form, Input, Button, Checkbox, Divider, message as toast, Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import './Login.css';
 import AuthLayout from "../../layouts/AuthLayout";
 import { loginRequest } from "../../store/authSlice";
-import { AxiosError } from "axios";
 
 const Login: FC = () => {
   let loggedIn = useAppSelector(isLoggedIn);
   let [loading, setLoading]  = useState(false)
   const distpatch = useAppDispatch()
-  const history = useHistory()
+
 
   useEffect(()=>{
  

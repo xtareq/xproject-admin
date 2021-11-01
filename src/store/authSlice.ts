@@ -3,8 +3,6 @@ import { AuthService } from '../api/AuthService'
 import type { RootState } from './index'
 import { Credential } from "../types/Auth";
 import { ls } from '../utils/Ls';
-import { message } from 'antd';
-import { Axios, AxiosError } from 'axios';
 
 
 export const loginRequest = createAsyncThunk('auth/login', async (credential:Credential)=>{
