@@ -1,5 +1,5 @@
 import { Divider } from "antd"
-
+import { withRouter } from 'react-router-dom'
 
 
 const AuthLayout = ({children}:any) =>{
@@ -21,4 +21,4 @@ const AuthLayout = ({children}:any) =>{
     )
 }
 
-export default AuthLayout;
+export default withRouter(AuthLayout);
