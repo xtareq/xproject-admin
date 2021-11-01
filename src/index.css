@@ -12,3 +12,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-danger {
+  color: white;
+  background-color: #E23C39 !important;
+  border-color: red;
+}
+
+.bg-danger:hover, .bg-danger:active, .bg-danger:focus,.bg-danger:visited{
+  color: white;
+  background-color: #c91d1a !important;
+  border-color: red;
+}
+.bg-success {
+  color: white;
+  background-color: #70C040;
+  border-color: #70c040;
+}
+
+.bg-success:hover, .bg-success:active, .bg-success:visited, .bg-success:focus {
+  color: white;
+  background-color: #4fb912;
+  border-color: #4fb912;
+}
+
+.bg-warning {
+  color: white;
+  background-color: #EFAF41;
+  border-color: #EFAF41;
+}
+
+.bg-warning:hover,.bg-warning:active, .bg-warning:visited, .bg-warning:focus{
+  color: white;
+  background-color: #ce9737;
+  border-color: #ce9737;
+}
+

@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import { selectLoggedInUser,isLoggedIn, getProfileRequest, accountSlice } from './store/accountSlice'
 import { authSlice , loginRequest} from './store/authSlice'
 import { Credential } from './types/Auth'
+import { createBrowserHistory } from "history";
 
 
 export interface IRoute{
@@ -20,6 +21,7 @@ export interface IRoute{
 }
 
 const publicRoutes:string[]=["/login","/forget-password","/reset-password"];
+const history = createBrowserHistory();
 const routes:IRoute[] = [
   {
     path:"/",
@@ -69,18 +71,17 @@ function App() {
 
   return (
     <div className="App">
-      <h3>{loggedInUser.name}</h3>
-      {!loggedIn? <button onClick={login}>Login</button>:<button onClick={logout}>Logout</button>}
+      {/* <h3>{loggedInUser.name}</h3>
+      {!loggedIn? <button onClick={login}>Login</button>:<button onClick={logout}>Logout</button>} */}
 
-      <Router>
-          <Route path="/login" component={()=><Login/>}/>
+      <Router history={history}>
+         <Route path="/login" component={()=><Login/>}/>
          <Route path="/forget-password" component={()=><ForgetPassword/>}/>
          <Route path="/reset-password" component={()=><ResetPassword/>}/>
          {!loggedIn ?!publicRoutes.includes(window.location.pathname)&&<Redirect to="/login"/>:
          <AppLayout>
             <Switch >
               {  
-                
                 routes.map((r,i)=>{
                   return <Route key={i} exact={r.exact} path={r.path} component={()=><r.children/>} /> 
                 })

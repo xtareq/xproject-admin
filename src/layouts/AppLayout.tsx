@@ -1,8 +1,9 @@
+import AppHeader from "../components/layouts/app-header";
 
 const AppLayout = ({children}:any) =>{
     return (
         <div>
-            header
+            <AppHeader></AppHeader>
             {children}</div>
     )
 }

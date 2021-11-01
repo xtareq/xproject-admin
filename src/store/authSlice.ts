@@ -3,30 +3,39 @@ import { AuthService } from '../api/AuthService'
 import type { RootState } from './index'
 import { Credential } from "../types/Auth";
 import { ls } from '../utils/Ls';
+import { message } from 'antd';
+import { Axios, AxiosError } from 'axios';
 
 
 export const loginRequest = createAsyncThunk('auth/login', async (credential:Credential)=>{
-    try {
-      const response = await AuthService.doLogin(credential)
-      ls.$set("accessToken",response.data.token)
-      return response.data
-    } catch (error:any) {
-      return Promise.reject(error&&error.response&&error.response.data)
-    }
+      try {
+        const {data:result} = await AuthService.doLogin(credential)
+        ls.$set("accessToken",result.token)
+        return {result}
+      } catch (error: any) {
+        if(error&&error.response&&error.response.data){
+          return {errors:error&&error.response&&error.response.data}
+        } 
+
+        return error;
+      }
 })
 
 // Define a type for the slice state
 interface AuthState {
   loading: boolean,
   isLoggedIn: boolean,
-  accessToken:string
+  accessToken:string,
+  error: string | Array<string> | undefined
+  
 }
 
 // Define the initial state using that type
 const initialState: AuthState = {
   loading:false,
   isLoggedIn: false,
-  accessToken:""
+  accessToken:"",
+  error:''
 }
 
 export const authSlice = createSlice({
@@ -43,12 +52,6 @@ export const authSlice = createSlice({
   extraReducers(builder){
     builder.addCase(loginRequest.fulfilled,(state,action)=>{
       state.isLoggedIn = true 
-      console.log(action);
-      
-    }),
-    builder.addCase(loginRequest.rejected,(state,action)=>{
-      state.isLoggedIn = false 
-      console.log(action)
     })
   }
 })
